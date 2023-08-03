@@ -1,0 +1,367 @@
+use("db_campus_alquiler");
+db.createCollection('Cliente');
+db.Cliente.insertMany([
+    { 
+        ID: 1,
+        Nombre: 'Juan',
+        Apellido: 'Perez',
+        DNI: '12345678',
+        Direccion: 'Calle 123',
+        Telefono: '11111111', 
+        Email: 'juan@example.com'},
+    {
+        ID: 2, 
+        Nombre: 'Maria', 
+        Apellido: 'Lopez', 
+        DNI: '87654321', 
+        Direccion: 'Avenida 456', 
+        Telefono: '22222222', 
+        Email: 'maria@example.com'},
+    { 
+        ID: 3, 
+        Nombre: 'Pedro', 
+        Apellido: 'Gonzalez', 
+        DNI: '56789012', 
+        Direccion: 'Plaza 789', 
+        Telefono: '33333333', 
+        Email: 'pedro@example.com'},
+    { 
+        ID: 4, 
+        Nombre: 'Laura', 
+        Apellido: 'Martinez', 
+        DNI: '09876543', 
+        Direccion: 'Ruta 101', 
+        Telefono: '44444444', 
+        Email: 'laura@example.com'},
+    { 
+        ID: 5, 
+        Nombre: 'Carlos', 
+        Apellido: 'Gomez', 
+        DNI: '43210987', 
+        Direccion: 'Calle 987', 
+        Telefono: '55555555', 
+        Email: 'carlos@example.com'}
+]);
+
+db.createCollection('Automovil');
+db.Automovil.insertMany([
+    { 
+        ID: 1, 
+        Marca: 'Toyota', 
+        Modelo: 'Corolla', 
+        Anio: 2021, 
+        Tipo: 'Sedan', 
+        Capacidad: 5, 
+        Precio_Diario: 50.00},
+    { 
+        ID: 2, 
+        Marca: 'Honda', 
+        Modelo: 'Civic',
+        Anio: 2020, 
+        Tipo: 'Sedan', 
+        Capacidad: 5, 
+        Precio_Diario: 45.00},
+    { 
+        ID: 3, 
+        Marca: 'Ford', 
+        Modelo: 'Explorer', 
+        Anio: 2019, 
+        Tipo: 'SUV', 
+        Capacidad: 7, 
+        Precio_Diario: 60.00},
+    { 
+        ID: 4, 
+        Marca: 'Chevrolet', 
+        Modelo: 'Equinox', 
+        Anio: 2022, 
+        Tipo: 'SUV', 
+        Capacidad: 5, 
+        Precio_Diario: 55.00},
+    { 
+        ID: 5, 
+        Marca: 'Nissan', 
+        Modelo: 'Sentra', 
+        Anio: 2022, 
+        Tipo: 'Sedan', 
+        Capacidad: 4, 
+        Precio_Diario: 48.00}
+]);
+
+db.createCollection('Sucursal');
+db.Sucursal.insertMany([
+    { 
+        ID: 1, 
+        Nombre: 'Sucursal A', 
+        Direccion: 'Calle Principal 123', 
+        Telefono: '1111111111'},
+    { 
+        ID: 2, 
+        Nombre: 'Sucursal B', 
+        Direccion: 'Avenida Central 456', 
+        Telefono: '2222222222'},
+    { 
+        ID: 3, 
+        Nombre: 'Sucursal C',
+        Direccion: 'Plaza Principal 789', 
+        Telefono: '3333333333'},
+    { 
+        ID: 4, 
+        Nombre: 'Sucursal D', 
+        Direccion: 'Ruta Secundaria 101', 
+        Telefono: '4444444444'},
+    { 
+        ID: 5, 
+        Nombre: 'Sucursal E', 
+        Direccion: 'Carretera Principal 987', 
+        Telefono: '5555555555'}
+]);
+  
+// Colección: Contrato (fusion de Alquiler y Reserva)
+
+db.createCollection('Contrato');
+db.Contrato.insertMany([
+    { 
+        ID: 1, 
+        ID_Cliente: 1, 
+        ID_Automovil: 3, 
+        Fecha_Inicio: ISODate('2023-07-01'), 
+        Fecha_Fin: ISODate('2023-07-05'), 
+        Costo_Total: 240.00, 
+        Estado: 'Activo', 
+        Tipo: 'Alquiler'},
+    { 
+        ID: 2, 
+        ID_Cliente: 2, 
+        ID_Automovil: 4, 
+        Fecha_Inicio: ISODate('2023-07-02'), 
+        Fecha_Fin: ISODate('2023-07-07'), 
+        Costo_Total: 275.00, 
+        Estado: 'Disponible', 
+        Tipo: 'Alquiler'},
+    { 
+        ID: 3, 
+        ID_Cliente: 3, 
+        ID_Automovil: 1, 
+        Fecha_Inicio: ISODate('2023-07-03'), 
+        Fecha_Fin: ISODate('2023-07-06'), 
+        Costo_Total: 150.00, 
+        Estado: 'Activo', 
+        Tipo: 'Alquiler'},
+    { 
+        ID: 4, 
+        ID_Cliente: 4, 
+        ID_Automovil: 5, 
+        Fecha_Inicio: ISODate('2023-07-04'), 
+        Fecha_Fin: ISODate('2023-07-08'), 
+        Costo_Total: 192.00, 
+        Estado: 'Activo', 
+        Tipo: 'Alquiler'},
+    { 
+        ID: 5, 
+        ID_Cliente: 5, 
+        ID_Automovil: 2, 
+        Fecha_Inicio: ISODate('2023-07-05'), 
+        Fecha_Fin: ISODate('2023-07-09'), 
+        Costo_Total: 225.00, 
+        Estado: 'Disponible', 
+        Tipo: 'Alquiler'},
+    { 
+        ID: 6, 
+        ID_Cliente: 2, 
+        ID_Automovil: 1, 
+        Fecha_Inicio: ISODate('2023-07-06'), 
+        Fecha_Fin: ISODate('2023-07-10'), 
+        Estado: 'Pendiente', 
+        Tipo: 'Reserva'},
+    { 
+        
+        ID: 7, 
+        ID_Cliente: 3, 
+        ID_Automovil: 3, 
+        Fecha_Inicio: ISODate('2023-07-07'), 
+        Fecha_Fin: ISODate('2023-07-12'), 
+        Estado: 'Pendiente', 
+        Tipo: 'Reserva'},
+    { 
+        ID: 8, 
+        ID_Cliente: 4, 
+        ID_Automovil: 2, 
+        Fecha_Inicio: ISODate('2023-07-08'), 
+        Fecha_Fin: ISODate('2023-07-14'), 
+        Estado: 'Pendiente', 
+        Tipo: 'Reserva'},
+    { 
+        ID: 9, 
+        ID_Cliente: 5, 
+        ID_Automovil: 4, 
+        Fecha_Inicio: ISODate('2023-07-09'), 
+        Fecha_Fin: ISODate('2023-07-15'), 
+        Estado: 'Pendiente', 
+        Tipo: 'Reserva'},
+    { 
+        ID: 10, 
+        ID_Cliente: 1, 
+        ID_Automovil: 5, 
+        Fecha_Inicio: ISODate('2023-07-10'), 
+        Fecha_Fin: ISODate('2023-07-16'), 
+        Estado: 'Pendiente', 
+        Tipo: 'Reserva'},
+]);
+
+//Registro(Union de ambos registros)
+
+db.createCollection('Registro');
+db.Registro.insertMany([
+    { 
+        ID: 1, 
+        ID_Contrato: 1, 
+        ID_Empleado: 3, 
+        Fecha_Entrega: ISODate('2023-07-05'), 
+        Combustible_Entregado: 40.00, 
+        Kilometraje_Entregado: 2000, 
+        Tipo_Registro: 'Entrega'},
+    { 
+        ID: 2, 
+        ID_Contrato: 2, 
+        ID_Empleado: 4, 
+        Fecha_Entrega: ISODate('2023-07-07'), 
+        Combustible_Entregado: 30.00, 
+        Kilometraje_Entregado: 1800, 
+        Tipo_Registro: 'Entrega'},
+    { 
+        ID: 3, 
+        ID_Contrato: 3, 
+        ID_Empleado: 1, 
+        Fecha_Entrega: ISODate('2023-07-06'), 
+        Combustible_Entregado: 45.00, 
+        Kilometraje_Entregado: 2200, 
+        Tipo_Registro: 'Entrega'},
+    { 
+        ID: 4, 
+        ID_Contrato: 4, 
+        ID_Empleado: 5, 
+        Fecha_Entrega: ISODate('2023-07-08'), 
+        Combustible_Entregado: 50.00, 
+        Kilometraje_Entregado: 2400, 
+        Tipo_Registro: 'Entrega'},
+    { 
+        ID: 5, 
+        ID_Contrato: 5, 
+        ID_Empleado: 2, 
+        Fecha_Entrega: ISODate('2023-07-09'), 
+        Combustible_Entregado: 35.00, 
+        Kilometraje_Entregado: 1900, 
+        Tipo_Registro: 'Entrega'},
+    { 
+        ID: 6, 
+        ID_Contrato: 1, 
+        ID_Empleado: 3, 
+        Fecha_Devolucion: ISODate('2023-07-10'), 
+        Combustible_Devuelto: 10.00,
+        Kilometraje_Devuelto: 2500,
+        Monto_Adicional: 20.00,
+        Tipo_Registro: 'Devolucion'},
+    { 
+        ID: 7, 
+        ID_Contrato: 2, 
+        ID_Empleado: 4, 
+        Fecha_Devolucion: ISODate('2023-07-12'), 
+        Combustible_Devuelto: 15.00,
+        Kilometraje_Devuelto: 2100,
+        Monto_Adicional: 15.00,
+        Tipo_Registro: 'Devolucion'},
+    { 
+        ID: 8, 
+        ID_Contrato: 3, 
+        ID_Empleado: 1, 
+        Fecha_Devolucion: ISODate('2023-07-11'), 
+        Combustible_Devuelto: 20.00,
+        Kilometraje_Devuelto: 2300,
+        Monto_Adicional: 25.00,
+        Tipo_Registro: 'Devolucion'},
+    { 
+        ID: 9, 
+        ID_Contrato: 4, 
+        ID_Empleado: 5, 
+        Fecha_Devolucion: ISODate('2023-07-13'), 
+        Combustible_Devuelto: 25.00, 
+        Kilometraje_Devuelto: 2600,
+        Monto_Adicional: 30.00,Tipo_Registro: 'Devolucion'},
+    { 
+        ID: 10, 
+        ID_Contrato: 5, 
+        ID_Empleado: 2, 
+        Fecha_Devolucion: ISODate('2023-07-14'), 
+        Combustible_Devuelto: 18.00, 
+        Kilometraje_Devuelto: 2000,
+        Monto_Adicional: 12.00,
+        Tipo_Registro: 'Devolucion'}
+]);
+
+
+
+use("db_campus_alquiler");
+db.getCollection('Contrato').aggregate([
+    // Etapa 1: Filtrar los documentos donde el campo 'ID' sea igual a 1
+    {
+        $match: { ID: { $eq: 1 } }
+    },
+    // Etapa 2: Realizar una unión con la colección 'Cliente'
+    {
+        $lookup: {
+            from: 'Cliente', // Colección a unir
+            localField: 'ID_Cliente', // Campo local para la unión (en 'Contrato')
+            foreignField: 'ID', // Campo extranjero para la unión (en 'Cliente')
+            as: 'fk' // Nombre del nuevo campo que contendrá los resultados de la unión
+        }
+    },
+    // Etapa 3: Desconstruir el campo 'fk' que contiene los resultados de la unión
+    {
+        $unwind: '$fk'
+    },
+    // Etapa 4: Proyectar los campos para el resultado final
+    {
+        $project: {
+            Fecha_Fin: 0, // Excluir el campo 'Fecha_Fin' del resultado final
+            Fecha_Inicio: 0, // Excluir el campo 'Fecha_Inicio' del resultado final
+            _id: 0, // Excluir el campo '_id' del resultado final
+            'fk._id': 0 // Excluir el campo '_id' del array 'fk' que contiene los datos del cliente
+        }
+    },
+    // Etapa 5: Agrupar los documentos resultantes por el campo 'ID_Automovil'
+    {
+        $group: {
+            _id: '$ID_Automovil', // Campo por el que se agrupa
+            ID_Cliente: { $first: '$ID_Cliente' }, // Seleccionar el primer valor no nulo del campo 'ID_Cliente'
+            fk: { $push: '$fk' } // Crear un array con los documentos agrupados de 'Cliente'
+        }
+    }
+]);
+
+/**
+ * ! Mostrar todos los clientes registrados en la base de datos.
+ */
+use("db_campus_alquiler");
+// db.Cliente.find({ID : { $gt : 0}})
+db.Cliente.find()
+
+/**
+ * ! Obtener todos los automóviles disponibles para alquiler
+ */
+use("db_campus_alquiler");
+db.getCollection('Automovil').aggregate([
+    {
+        $match: { Estado: { $eq: 'Disponible' } }
+    },
+    {
+        $lookup: {
+            from: 'Contrato',
+            localField: 'ID_Automovil',
+            foreignField: 'ID',
+            as: 'fk' 
+        }
+    },
+    {
+        $unwind: '$fk'
+    },
+])
