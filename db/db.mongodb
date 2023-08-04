@@ -349,19 +349,20 @@ db.Cliente.find()
  * ! Obtener todos los automóviles disponibles para alquiler
  */
 use("db_campus_alquiler");
-db.getCollection('Automovil').aggregate([
+db.Contrato.aggregate([
+    {
+        $lookup: {
+            from: 'Automovil',
+            localField: 'ID_Automovil',
+            foreignField: 'ID',
+            as: 'relacion'
+        }
+    },
     {
         $match: { Estado: { $eq: 'Disponible' } }
     },
     {
-        $lookup: {
-            from: 'Contrato',
-            localField: 'ID_Automovil',
-            foreignField: 'ID',
-            as: 'fk' 
-        }
+        $unwind: '$relacion'
     },
-    {
-        $unwind: '$fk'
-    },
+    
 ])

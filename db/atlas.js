@@ -2,20 +2,20 @@ import {MongoClient} from  'mongodb'
 import dotenv from 'dotenv';
 
 dotenv.config();
-export async function con(){
+
+const uri = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@cluster0.xuq9yaf.mongodb.net/${process.env.ATLAS_DB}`;
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+};
+
+export async function con() {
+    const client = new MongoClient(uri, options);
     try {
-        const uri = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@cluster0.xuq9yaf.mongodb.net/${process.env.ATLAS_DB}`
-        const options = {
-            useNewUrlParser : true,
-            useUnifiedTopology : true,
-        };
-        const client = await MongoClient.connect(uri, options);
-        return client.db();
+        await client.connect();
+        const db = client.db();
+        return db;
     } catch (error) {
-        return {
-            statusCode : 500,
-            message : error
-        }
-    };
-    
+        throw new Error('Error al conectar a la base de datos: ' + error.message);
+    }
 }
