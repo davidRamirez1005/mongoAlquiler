@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import {servidor} from './config/connec.js';
 import {limitget} from './helpers/configLimit.js'
 import appClientes from './routers/clientesRouter.js';
+import appAutomovil from './routers/automovilesRouter.js';
+import appEjemplo from './routers/usuarioEjemplo.js';
 
 dotenv.config();
 const appExpress = express();
@@ -10,6 +12,8 @@ const appExpress = express();
 
 appExpress.use(express.json());
 appExpress.use('/clientes',limitget(), appClientes)
+appExpress.use('/auto',limitget(), appAutomovil)
+appExpress.use('/ej',limitget(), appEjemplo)
 
 
 appExpress.listen(servidor.port, () => {

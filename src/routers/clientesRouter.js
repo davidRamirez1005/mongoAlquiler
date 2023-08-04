@@ -31,6 +31,20 @@ appClientes.get('/', limitget(), async(req, res) =>{
     }
     });
 
+appClientes.post('/', limitget(), async(req, res) => {
+    if(!req.rateLimit) return;
 
+    let db = await con();
+    let usuario = db.collection('Cliente');
+    try {
+        let result = await usuario.insertOne(req.body);
+        console.log(result);
+        res.send(':)')
+    } catch (error) {
+        console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
+        res.send(':(')
+    };
+    
+})
 
 export default appClientes;

@@ -1,5 +1,123 @@
 use("db_campus_alquiler");
-db.createCollection('Cliente');
+
+db.createCollection("usuario", {
+    capped: true,
+    size: 690,
+    max: 5,
+    validator: {
+        $jsonSchema: {
+            bsonType: 'object',
+            additionalProperties: false,
+            required: ['nombre', 'apellido', 'edad'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId',
+                    description: 'El parametro _id es obligatorio'
+                },
+                nombre: {
+                    bsonType: 'string',
+                    description: 'El parametro nombre es obligatorio'
+                },
+                apellido: {
+                    bsonType: 'string',
+                    description: 'El parametro apellido es obligatorio'
+                },
+                edad: {
+                    bsonType: 'number',
+                    description: 'El parametro edad es obligatorio'
+                }
+            },
+            allOf: [
+                {
+                    properties: {
+                        email: {
+                            bsonType: 'string',
+                            description: 'El parametro email es obligatorio'
+                        }
+                    }
+                }
+            ],
+        },
+    }
+});
+use("db_campus_alquiler");
+db.usuario.insertMany([
+    {
+        "nombre": "jose david",
+        "apellido" : "ramirez",
+        "edad" : 19
+    },
+    {
+        "nombre": "juan ",
+        "apellido" : "ramirez",
+        "edad" : 17
+    },
+    {
+        "nombre": "apolo",
+        "apellido" : "apolo",
+        "edad" : 80
+    },
+    {
+        "nombre": "sputnik",
+        "apellido" : "dos",
+        "edad" : 41
+    },
+    {
+        "nombre": "hola",
+        "apellido" : "buen dia",
+        "edad" : 25
+    }
+])
+
+use("db_campus_alquiler");
+db.createCollection('Cliente', {
+    capped: true,
+    size: 2200,
+    max: 7,
+    validator: {
+        $jsonSchema: {
+            bsonType: 'object',
+            additionalProperties: false,
+            required: ['ID', 'Nombre', 'Apellido','DNI', 'Direccion', 'Telefono'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId',
+                    description: 'El parametro _id es obligatorio'
+                },
+                ID: {
+                    bsonType: 'int',
+                    description: 'El parametro ID es obligatorio'
+                },
+                Nombre: {
+                    bsonType: 'string',
+                    description: 'El parametro nombre es obligatorio'
+                },
+                Apellido: {
+                    bsonType: 'string',
+                    description: 'El parametro apellido es obligatorio'
+                },
+                DNI: {
+                    bsonType: 'string',
+                    description: 'El parametro DNI es obligatorio'
+                },
+                Direccion: {
+                    bsonType: 'string',
+                    description: 'El parametro Direccion es obligatorio'
+                },
+                Telefono: {
+                    bsonType: 'string',
+                    description: 'El parametro Telefono es obligatorio'
+                },
+                Email: {
+                    bsonType: 'string',
+                    description: 'El parametro Email no es obligatorio pero es permitible'
+                }
+            },
+        },
+    }
+});
+
+use("db_campus_alquiler");
 db.Cliente.insertMany([
     { 
         ID: 1,
@@ -363,6 +481,6 @@ db.Contrato.aggregate([
     },
     {
         $unwind: '$relacion'
-    },
+    }
     
 ])
