@@ -5,7 +5,9 @@ import {con} from '../../db/atlas.js'
 
 dotenv.config();
 const appAutomovil = Router();
-
+/**
+ * ? Listar automoviles disponibles.
+ */
 const consulta = [
     {
         $lookup: {
@@ -16,10 +18,18 @@ const consulta = [
         }
     },
     {
-        $match: { Estado: 'Disponible' }
+        $match: { Estado: { $eq: 'Disponible' } }
     },
     {
         $unwind: '$relacion'
+    },
+    {
+        $project: {
+            Fecha_Fin: 0,
+            Fecha_Inicio: 0,
+            _id: 0, 
+            'relacion._id': 0 
+        }
     }
 ];
 
