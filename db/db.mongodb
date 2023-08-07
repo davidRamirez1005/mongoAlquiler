@@ -160,6 +160,100 @@ db.Cliente.insertMany([
         Telefono: '55555555', 
         Email: 'carlos@example.com'}
 ]);
+
+
+use("db_campus_alquiler");
+db.createCollection('Empleado', {
+    capped: true,
+    size: 2000,
+    max: 8,
+    validator: {
+        $jsonSchema: {
+            bsonType: 'object',
+            additionalProperties: false,
+            required: ['ID', 'Nombre', 'Apellido','DNI', 'Direccion', 'Telefono', 'cargo'],
+            properties: {
+                _id: {
+                    bsonType: 'objectId',
+                    description: 'El parametro _id es obligatorio'
+                },
+                ID: {
+                    bsonType: 'int',
+                    description: 'El parametro ID es obligatorio'
+                },
+                Nombre: {
+                    bsonType: 'string',
+                    description: 'El parametro nombre es obligatorio'
+                },
+                Apellido: {
+                    bsonType: 'string',
+                    description: 'El parametro apellido es obligatorio'
+                },
+                DNI: {
+                    bsonType: 'string',
+                    description: 'El parametro DNI es obligatorio'
+                },
+                Direccion: {
+                    bsonType: 'string',
+                    description: 'El parametro Direccion es obligatorio'
+                },
+                Telefono: {
+                    bsonType: 'string',
+                    description: 'El parametro Telefono es obligatorio'
+                },
+                cargo: {
+                    bsonType: 'string',
+                    description: 'El parametro cargo no es obligatorio pero es permitible'
+                }
+            },
+        },
+    }
+});
+
+use("db_campus_alquiler");
+db.Empleado.insertMany([
+    { 
+        ID: 1,
+        Nombre: 'juan diego',
+        Apellido: 'Perez',
+        DNI: '12345678',
+        Direccion: 'Calle 123',
+        Telefono: '11111111', 
+        cargo: 'vendedor'},
+    {
+        ID: 2, 
+        Nombre: 'manuel', 
+        Apellido: 'laborde', 
+        DNI: '87654321', 
+        Direccion: 'Avenida 456', 
+        Telefono: '22222222', 
+        cargo: 'vendedor'},
+    { 
+        ID: 3, 
+        Nombre: 'marlon', 
+        Apellido: 'Gonzalez', 
+        DNI: '56789012', 
+        Direccion: 'Plaza 789', 
+        Telefono: '33333333', 
+        cargo: 'recepcionista'},
+    { 
+        ID: 4, 
+        Nombre: 'michelle', 
+        Apellido: 'Martinez', 
+        DNI: '09876543', 
+        Direccion: 'Ruta 101', 
+        Telefono: '44444444', 
+        cargo: 'vendedor'},
+    { 
+        ID: 5, 
+        Nombre: 'efrain', 
+        Apellido: 'Gomez', 
+        DNI: '43210987', 
+        Direccion: 'Calle 987', 
+        Telefono: '55555555', 
+        cargo: 'celador'}
+]);
+
 use("db_campus_alquiler");
 db.createCollection('Automovil', {
     capped: true,
@@ -280,6 +374,18 @@ db.createCollection('Sucursal' , {
                 Telefono: {
                     bsonType: 'string',
                     description: 'El parametro Telefono es obligatorio'
+                },
+                ID_Sucursal: {
+                    bsonType: 'int',
+                    description: 'El parametro ID_Sucursal es obligatorio'
+                },
+                ID_Automovil: {
+                    bsonType: 'int',
+                    description: 'El parametro ID_Automovil es obligatorio'
+                },
+                Cantidad_Disponible: {
+                    bsonType: 'number',
+                    description: 'El parametro Cantidad_Disponible es obligatorio'
                 }
             },
         },
@@ -291,27 +397,47 @@ db.Sucursal.insertMany([
         ID: 1, 
         Nombre: 'Sucursal A', 
         Direccion: 'Calle Principal 123', 
-        Telefono: '1111111111'},
+        Telefono: '1111111111',
+        ID_Sucursal : 1,
+        ID_Automovil: 2,
+        Cantidad_Disponible : 10
+    },
     { 
         ID: 2, 
         Nombre: 'Sucursal B', 
         Direccion: 'Avenida Central 456', 
-        Telefono: '2222222222'},
+        Telefono: '2222222222',
+        ID_Sucursal : 2,
+        ID_Automovil: 1,
+        Cantidad_Disponible : 20
+    },
     { 
         ID: 3, 
         Nombre: 'Sucursal C',
         Direccion: 'Plaza Principal 789', 
-        Telefono: '3333333333'},
+        Telefono: '3333333333',
+        ID_Sucursal : 3,
+        ID_Automovil: 3,
+        Cantidad_Disponible : 5
+    },
     { 
         ID: 4, 
         Nombre: 'Sucursal D', 
         Direccion: 'Ruta Secundaria 101', 
-        Telefono: '4444444444'},
+        Telefono: '4444444444',
+        ID_Sucursal : 4,
+        ID_Automovil: 4,
+        Cantidad_Disponible : 6
+    },
     { 
         ID: 5, 
         Nombre: 'Sucursal E', 
         Direccion: 'Carretera Principal 987', 
-        Telefono: '5555555555'}
+        Telefono: '5555555555',
+        ID_Sucursal : 5,
+        ID_Automovil: 5,
+        Cantidad_Disponible : 10
+    }
 ]);
 // Colección: Contrato (fusion de Alquiler y Reserva)
 use("db_campus_alquiler");
@@ -739,9 +865,4 @@ db.Contrato.aggregate([
         }
     }
 ]);
-
-/**
- * !  Mostrar todas las reservas pendientes con los datos del cliente y el automóvil reservado
- */
-
 
