@@ -42,6 +42,25 @@ appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
     let result = await coleccion.find(filter).project({_id : 0}).toArray();
     res.send(result);
 });
+/**
+ * ? Listar las reservas pendientes realizadas por un cliente específicoz
+ *  * http://127.0.0.3:5012/esp/12345678
+ */
+appClientes.get('/esp/:DNI', limitget(), async (req, res) => {
+    if (!req.rateLimit) return;
+
+    const DNI = req.params.DNI;
+    let db = await con();
+    let coleccion = db.collection('Cliente');
+    const filter = {
+        $and: [
+            isNaN(parseInt(DNI)) ? { _id: new ObjectId(DNI) } : { DNI: String(DNI) },
+            reservas
+        ]
+    };
+    let result = await coleccion.aggregate(filter).toArray();
+    res.send(result);
+});
 
 /**
 * ! POST

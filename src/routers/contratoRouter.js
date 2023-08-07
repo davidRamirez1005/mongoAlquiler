@@ -4,6 +4,7 @@ import {limitget} from '../helpers/configLimit.js'
 import {ObjectId} from 'mongodb'
 import {con} from '../../db/atlas.js'
 import { alquiler_activo, reserva_pendiente, projection } from '../data/contratoDataAcess.js';
+import { fecha_inicio } from '../data/contratoDataAcess.js';
 
 dotenv.config();
 const appContrato = Router();
@@ -81,6 +82,19 @@ appContrato.get('/costo/:ID', limitget(), async(req, res) =>{
         ]
     };
     let result = await coleccion.find(filter).project(projection).toArray();
+    res.send(result)
+})
+
+/**
+ * ? Obtener los detalles del alquiler que tiene fecha de inicio en '2023-07-05'
+ *  * http://127.0.0.3:5012/fecha
+ */
+appContrato.get('/fecha', limitget(), async(req, res) =>{
+    if(!req.rateLimit) return;
+
+    let db = await con();
+    let coleccion = db.collection('Contrato');
+    let result = await coleccion.aggregate(fecha_inicio).toArray();
     res.send(result)
 })
 
