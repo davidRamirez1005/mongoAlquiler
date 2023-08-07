@@ -1,3 +1,4 @@
+import mongodb from 'mongodb'
 /**
  * ? Listar todos los alquileres activos junto con los datos de los clientes relacionados.
  *  * http://127.0.0.3:5012/alquiler
@@ -103,3 +104,22 @@ export const projection = {
     ID: 1,
     Costo_Total: 1
 };
+
+/**
+ * ? Obtener los detalles del alquiler que tiene fecha de inicio en '2023-07-05'
+ *  * http://127.0.0.3:5012/fecha
+ */
+export const fecha_inicio = [
+    {
+        $match: { Fecha_Inicio: new Date('2023-07-05') }
+    },
+    {
+        $project : {
+            _id : 0
+            
+        }
+    }
+];
+
+
+
