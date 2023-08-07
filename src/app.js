@@ -16,11 +16,11 @@ const appExpress = express();
 
 appExpress.use(express.json());
 appExpress.use('/ej',limitget(), appEjemplo)
-appExpress.use('/',limitget(), appClientes)
-appExpress.use('/',limitget(), appAutomovil)
-appExpress.use('/',limitget(), appContrato)
-appExpress.use('/',limitget(), appEmpleado)
-appExpress.use('/',limitget(), appSucursal)
+appExpress.use('/cliente',limitget(), appClientes)
+appExpress.use('/automovil',limitget(), appAutomovil)
+appExpress.use('/contrato',limitget(), appContrato)
+appExpress.use('/empleado',limitget(), appEmpleado)
+appExpress.use('/sucursal',limitget(), appSucursal)
 
 
 appExpress.listen(servidor.port, () => {
