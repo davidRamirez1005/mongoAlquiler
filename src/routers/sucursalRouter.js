@@ -10,7 +10,7 @@ const appSucursal = Router();
 
 /**
  * ? Mostrar la cantidad total de automóviles disponibles en cada sucursal.
- *  * http://127.0.0.3:5012/totalScucursal
+ *  * http://127.0.0.3:5012/sucursal/totalScucursal
  */
 appSucursal.get('/totalScucursal', limitget(), async(req, res) =>{
     if(!req.rateLimit) return;

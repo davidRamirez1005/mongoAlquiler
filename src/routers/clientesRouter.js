@@ -3,6 +3,7 @@ import {Router} from 'express';
 import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
+import { reservas, datos_cliente } from '../data/clienteDataAccess.js';
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const appClientes = Router();
  */
 /**
  * ? Mostrar todos los clientes registrados en la base de datos
- *  * http://127.0.0.3:5012/clientes
+ *  * http://127.0.0.3:5012/cliente/clientes
  */
 appClientes.get('/clientes', limitget(), async(req, res) =>{
     if (!req.rateLimit) return;
@@ -30,7 +31,7 @@ appClientes.get('/clientes', limitget(), async(req, res) =>{
 });
 /**
  * ? Listar los clientes con el DNI específico
- *  * http://127.0.0.3:5012/DNI/12345678
+ *  * http://127.0.0.3:5012/cliente/DNI/12345678
  */
 appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
@@ -44,14 +45,15 @@ appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
 });
 /**
  * ? Listar las reservas pendientes realizadas por un cliente específicoz
- *  * http://127.0.0.3:5012/esp/12345678
+ *  * http://127.0.0.3:5012/cliente/res/12345678
+ * TODO: listar
  */
-appClientes.get('/esp/:DNI', limitget(), async (req, res) => {
+appClientes.get('/res/:DNI', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
 
     const DNI = req.params.DNI;
     let db = await con();
-    let coleccion = db.collection('Cliente');
+    let coleccion = db.collection('Contrato');
     const filter = {
         $and: [
             isNaN(parseInt(DNI)) ? { _id: new ObjectId(DNI) } : { DNI: String(DNI) },
@@ -61,7 +63,18 @@ appClientes.get('/esp/:DNI', limitget(), async (req, res) => {
     let result = await coleccion.aggregate(filter).toArray();
     res.send(result);
 });
+/**
+ * ? Obtener los datos de los clientes que realizaron al menos un alquiler.
+ *  * http://127.0.0.3:5012/cliente/datos
+ */
+appClientes.get('/datos', limitget(), async(req, res) =>{
+    if(!req.rateLimit) return;
 
+    let db = await con();
+    let coleccion = db.collection('Contrato');
+    let result = await coleccion.aggregate(datos_cliente).toArray();
+    res.send(result)
+})
 /**
 * ! POST
 */

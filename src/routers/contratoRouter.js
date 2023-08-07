@@ -11,7 +11,7 @@ const appContrato = Router();
 
 /**
  * ? Listar todos los alquileres activos junto con los datos de los clientes relacionados.
- *  * http://127.0.0.3:5012/alquiler
+ *  * http://127.0.0.3:5012/contrato/alquiler
  */
 appContrato.get('/alquiler', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
@@ -29,7 +29,7 @@ appContrato.get('/alquiler', limitget(), async (req, res) => {
 
 /**
  * ? Mostrar todas las reservas pendientes con los datos del cliente y el automóvil reservado
- *  * http://127.0.0.3:5012/reservas
+ *  * http://127.0.0.3:5012/contrato/reservas
  */
 appContrato.get('/reservas', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
@@ -47,7 +47,7 @@ appContrato.get('/reservas', limitget(), async (req, res) => {
 
 /**
  * ? Obtener los detalles del alquiler con el ID_Alquilerespecífico.
- *  * http://127.0.0.3:5012/detalles/2
+ *  * http://127.0.0.3:5012/contrato/detalles/2
  */
 appContrato.get('/detalles/:ID', limitget(), async(req, res) =>{
     if(!req.rateLimit) return;
@@ -67,7 +67,7 @@ appContrato.get('/detalles/:ID', limitget(), async(req, res) =>{
 
 /**
  * ? Obtener el costo total de un alquiler específico.
- *  * http://127.0.0.3:5012/costo/3
+ *  * http://127.0.0.3:5012/contrato/costo/3
  */
 appContrato.get('/costo/:ID', limitget(), async(req, res) =>{
     if(!req.rateLimit) return;
@@ -87,7 +87,7 @@ appContrato.get('/costo/:ID', limitget(), async(req, res) =>{
 
 /**
  * ? Obtener los detalles del alquiler que tiene fecha de inicio en '2023-07-05'
- *  * http://127.0.0.3:5012/fecha
+ *  * http://127.0.0.3:5012/contrato/fecha
  */
 appContrato.get('/fecha', limitget(), async(req, res) =>{
     if(!req.rateLimit) return;
@@ -98,6 +98,22 @@ appContrato.get('/fecha', limitget(), async(req, res) =>{
     res.send(result)
 })
 
+/**
+ * ?  Obtener la cantidad total de alquileres registrados en la base de datos
+ * * http://127.0.0.3:5012/contrato/totales
+ */
+appContrato.get('/totales', limitget(), async (req, res) => {
+    if (!req.rateLimit) return;
 
+    try {
+        const db = await con();
+        const coleccion = db.collection('Contrato');
+        const totalDocumentos = await coleccion.countDocuments();
+        res.send({ total: totalDocumentos });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los datos de la base de datos.');
+    }
+});
 
 export default appContrato;

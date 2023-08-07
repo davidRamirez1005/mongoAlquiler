@@ -11,7 +11,7 @@ const appAutomovil = Router();
 
 /**
  * ? Listar automoviles disponibles.
- * * http://127.0.0.3:5012/auto
+ * * http://127.0.0.3:5012/automovil/auto
  */
 appAutomovil.get('/auto', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
@@ -29,7 +29,7 @@ appAutomovil.get('/auto', limitget(), async (req, res) => {
 
 /**
  * ? Mostrar todos los automóviles con una capacidad mayor a 5 personas
- * * http://127.0.0.3:5012/max
+ * * http://127.0.0.3:5012/automovil/max
  */
 appAutomovil.get('/max', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
@@ -45,5 +45,22 @@ appAutomovil.get('/max', limitget(), async (req, res) => {
     }
 });
 
+/**
+ * ? Listar todos los automóviles ordenados por marca y modelo
+ * * http://127.0.0.3:5012/automovil/ordenados
+ */
+appAutomovil.get('/ordenados', limitget(), async (req, res) => {
+    if (!req.rateLimit) return;
+
+    try {
+        const db = await con();
+        const coleccion = db.collection('Automovil');
+        const result = await coleccion.find().sort({ Marca: 1, Modelo: 1 }).toArray();
+        res.send(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los datos de la base de datos.');
+    }
+});
 
 export default appAutomovil;
