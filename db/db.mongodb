@@ -235,7 +235,7 @@ db.Empleado.insertMany([
         DNI: '56789012', 
         Direccion: 'Plaza 789', 
         Telefono: '33333333', 
-        cargo: 'recepcionista'},
+        cargo: 'Gerente'},
     { 
         ID: 4, 
         Nombre: 'michelle', 
@@ -251,7 +251,7 @@ db.Empleado.insertMany([
         DNI: '43210987', 
         Direccion: 'Calle 987', 
         Telefono: '55555555', 
-        cargo: 'celador'}
+        cargo: 'Asistente'}
 ]);
 
 use("db_campus_alquiler");
