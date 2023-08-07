@@ -11,7 +11,11 @@ const appClientes = Router();
 /**
  * ! GET
  */
-appClientes.get('/', limitget(), async(req, res) =>{
+/**
+ * ? Mostrar todos los clientes registrados en la base de datos
+ *  * http://127.0.0.3:5012/clientes
+ */
+appClientes.get('/clientes', limitget(), async(req, res) =>{
     if (!req.rateLimit) return;
 
     try {
@@ -23,6 +27,20 @@ appClientes.get('/', limitget(), async(req, res) =>{
         console.error(err);
         res.status(500).send('Error al obtener los datos de la base de datos.');
     }
+});
+/**
+ * ? Listar los clientes con el DNI específico
+ *  * http://127.0.0.3:5012/DNI/12345678
+ */
+appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
+    if (!req.rateLimit) return;
+
+    const DNI = req.params.DNI;
+    let db = await con();
+    let coleccion = db.collection('Cliente');
+    const filter = isNaN(parseInt(DNI)) ? { _id: new ObjectId(DNI) } : { DNI: String(DNI) };
+    let result = await coleccion.find(filter).project({_id : 0}).toArray();
+    res.send(result);
 });
 
 /**
