@@ -1,6 +1,6 @@
 /**
  * ? Listar automoviles disponibles.
- * * http://127.0.0.3:5012/auto
+ * * http://127.0.0.3:5012/automovil/auto
  */
 export const auto_disponible = [
     {
@@ -31,7 +31,7 @@ export const auto_disponible = [
 ];
 /**
  * ? Mostrar todos los automóviles con una capacidad mayor a 5 personas
- * * http://127.0.0.3:5012/max
+ * * http://127.0.0.3:5012/automovil/max
  */
 export const capacidad_max = [
 

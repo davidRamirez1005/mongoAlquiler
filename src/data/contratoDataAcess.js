@@ -1,7 +1,7 @@
 import mongodb from 'mongodb'
 /**
  * ? Listar todos los alquileres activos junto con los datos de los clientes relacionados.
- *  * http://127.0.0.3:5012/alquiler
+ *  * http://127.0.0.3:5012/contrato/alquiler
  */
 export const alquiler_activo = [
     // Filtrar solo los contratos activos
@@ -39,7 +39,7 @@ export const alquiler_activo = [
 
 /**
  * ? Mostrar todas las reservas pendientes con los datos del cliente y el automóvil reservado
- *  * http://127.0.0.3:5012/reservas
+ *  * http://127.0.0.3:5012/contrato/reservas
  */
 export const reserva_pendiente = [
     { $match: { Estado: 'Pendiente', Tipo: 'Reserva' } },
@@ -97,7 +97,7 @@ export const reserva_pendiente = [
 
 /**
  * ? Obtener el costo total de un alquiler específico.
- *  * http://127.0.0.3:5012/costo/3
+ *  * http://127.0.0.3:5012/contrato/costo/3
  */
 export const projection = {
     _id: 0,
@@ -107,7 +107,7 @@ export const projection = {
 
 /**
  * ? Obtener los detalles del alquiler que tiene fecha de inicio en '2023-07-05'
- *  * http://127.0.0.3:5012/fecha
+ *  * http://127.0.0.3:5012/contrato/fecha
  */
 export const fecha_inicio = [
     {
