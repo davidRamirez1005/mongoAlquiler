@@ -5,7 +5,10 @@ import {limitget} from './helpers/configLimit.js'
 import appClientes from './routers/clientesRouter.js';
 import appAutomovil from './routers/automovilesRouter.js';
 import appEjemplo from './routers/usuarioEjemplo.js';
-import appAlquilerActivo from './routers/alquilerActivos.js';
+import appContrato from './routers/contratoRouter.js';
+import appEmpleado from './routers/empleadoRouter.js';
+import appSucursal from './routers/sucursalRouter.js';
+
 
 dotenv.config();
 const appExpress = express();
@@ -13,9 +16,11 @@ const appExpress = express();
 
 appExpress.use(express.json());
 appExpress.use('/ej',limitget(), appEjemplo)
-appExpress.use('/clientes',limitget(), appClientes)
-appExpress.use('/auto',limitget(), appAutomovil)
-appExpress.use('/alquiler',limitget(), appAlquilerActivo)
+appExpress.use('/',limitget(), appClientes)
+appExpress.use('/',limitget(), appAutomovil)
+appExpress.use('/',limitget(), appContrato)
+appExpress.use('/',limitget(), appEmpleado)
+appExpress.use('/',limitget(), appSucursal)
 
 
 appExpress.listen(servidor.port, () => {
