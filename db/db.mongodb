@@ -8,11 +8,15 @@ db.createCollection("usuario", {
         $jsonSchema: {
             bsonType: 'object',
             additionalProperties: false,
-            required: ['nombre', 'apellido', 'edad'],
+            required: ['cc','nombre', 'edad'],
             properties: {
                 _id: {
                     bsonType: 'objectId',
                     description: 'El parametro _id es obligatorio'
+                },
+                cc: {
+                    bsonType: 'int',
+                    description: 'El parametro cc es obligatorio'
                 },
                 nombre: {
                     bsonType: 'string',
@@ -33,6 +37,10 @@ db.createCollection("usuario", {
                         email: {
                             bsonType: 'string',
                             description: 'El parametro email no es obligatorio per si lo usa debe ser un string'
+                        },
+                        apodo: {
+                            bsonType: 'string',
+                            description: 'El parametro apodo no es obligatorio per si lo usa debe ser un string'
                         }
                     }
                 }
@@ -42,30 +50,23 @@ db.createCollection("usuario", {
 });
 use("db_campus_alquiler");
 db.usuario.insertMany([
-    {
+    {   
+        "cc" : 123654,
         "nombre": "jose david",
         "apellido" : "ramirez",
         "edad" : 19
     },
-    {
+    {   
+        "cc" : 5645231,
         "nombre": "juan ",
         "apellido" : "ramirez",
         "edad" : 17
     },
-    {
+    {   
+        "cc" : 789654,
         "nombre": "apolo",
         "apellido" : "apolo",
         "edad" : 80
-    },
-    {
-        "nombre": "sputnik",
-        "apellido" : "dos",
-        "edad" : 41
-    },
-    {
-        "nombre": "hola",
-        "apellido" : "buen dia",
-        "edad" : 25
     }
 ])
 
