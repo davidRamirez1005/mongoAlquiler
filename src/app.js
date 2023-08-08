@@ -15,6 +15,8 @@ const appExpress = express();
 
 
 appExpress.use(express.json());
+
+appExpress.use('/token',limitget(), appEjemplo)
 appExpress.use('/ej',limitget(), appEjemplo)
 appExpress.use('/cliente',limitget(), appClientes)
 appExpress.use('/automovil',limitget(), appAutomovil)
