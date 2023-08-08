@@ -38,3 +38,34 @@ export const datos_cliente = [
         }
     }
 ];
+/**
+ * ?  Obtener los datos del cliente que realizó la reserva con ID_Reserva específico
+ *  * http://127.0.0.3:5012/cliente/reservaEsp/8
+ */
+export const cliente_especifico = [
+    {
+        $lookup: {
+            from: 'Cliente',
+            localField: 'ID_Cliente',
+            foreignField: 'ID',
+            as: 'cliente_especifico'
+        }
+    },
+    {
+        $match: { Tipo: { $eq: 'Reserva' } }
+    },
+    {
+        $unwind: '$cliente_especifico'
+    },
+    {
+        $project: {
+            Fecha_Fin: 0,
+            Fecha_Inicio: 0,
+            ID_Automovil : 0,
+            Estado : 0,
+            Costo_Total : 0,
+            _id: 0, 
+            'cliente_especifico._id': 0 
+        }
+    }
+];

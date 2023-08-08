@@ -120,6 +120,24 @@ export const fecha_inicio = [
         }
     }
 ];
+/**
+ * ?  Listar los alquileres con fecha de inicio entre '2023-07-05' y '2023-07-10'.
+ * * http://127.0.0.3:5012/contrato/inicioFin
+ */
+export const entre_fecha = [
+    {
+        $match: {
+            Fecha_Inicio: { $gte: new Date('2023-07-05'), $lte: new Date('2023-07-10') },
+            Tipo: 'Alquiler'
+        }
+    },
+    {
+        $project : {
+            _id : 0
+            
+        }
+    }
+];
 
 
 
