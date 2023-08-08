@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {ObjectId} from 'mongodb'
 import {con} from '../../db/atlas.js'
-import { alquiler_activo, reserva_pendiente, projection } from '../data/contratoDataAcess.js';
+import { alquiler_activo, reserva_pendiente, projection, entre_fecha } from '../data/contratoDataAcess.js';
 import { fecha_inicio } from '../data/contratoDataAcess.js';
 
 dotenv.config();
@@ -115,5 +115,21 @@ appContrato.get('/totales', limitget(), async (req, res) => {
         res.status(500).send('Error al obtener los datos de la base de datos.');
     }
 });
+/**
+ * ?  Listar los alquileres con fecha de inicio entre '2023-07-05' y '2023-07-10'.
+ * * http://127.0.0.3:5012/contrato/inicioFin
+ */
+appContrato.get('/inicioFin', limitget(), async (req, res) => {
+    if (!req.rateLimit) return;
 
+    try {
+        const db = await con();
+        const coleccion = db.collection('Contrato');
+        const result = await coleccion.aggregate(entre_fecha).toArray();
+        res.send(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los datos de la base de datos.');
+    }
+});
 export default appContrato;

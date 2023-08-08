@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
 import { auto_disponible } from '../data/automovilDataAccess.js';
-import { capacidad_max } from '../data/automovilDataAccess.js';
+import { capacidad_max, capacidad_disponible } from '../data/automovilDataAccess.js';
 
 
 dotenv.config();
@@ -63,4 +63,21 @@ appAutomovil.get('/ordenados', limitget(), async (req, res) => {
     }
 });
 
+/**
+ * ? Mostrar los automóviles con capacidad igual a 5 personas y que estén disponibles 
+ * * http://127.0.0.3:5012/automovil/capDis
+ */
+appAutomovil.get('/capDis', limitget(), async (req, res) => {
+    if (!req.rateLimit) return;
+
+    try {
+        const db = await con();
+        const coleccion = db.collection('Contrato');
+        const result = await coleccion.aggregate(capacidad_disponible).toArray();
+        res.send(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los datos de la base de datos.');
+    }
+});
 export default appAutomovil;

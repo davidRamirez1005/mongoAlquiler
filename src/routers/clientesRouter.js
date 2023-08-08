@@ -3,7 +3,7 @@ import {Router} from 'express';
 import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
-import { reservas, datos_cliente } from '../data/clienteDataAccess.js';
+import { reservas, datos_cliente, cliente_especifico } from '../data/clienteDataAccess.js';
 
 dotenv.config();
 
@@ -46,7 +46,7 @@ appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
 /**
  * ? Listar las reservas pendientes realizadas por un cliente específicoz
  *  * http://127.0.0.3:5012/cliente/res/12345678
- * TODO: listar
+ * TODO:fix
  */
 appClientes.get('/res/:DNI', limitget(), async (req, res) => {
     if (!req.rateLimit) return;
@@ -75,6 +75,39 @@ appClientes.get('/datos', limitget(), async(req, res) =>{
     let result = await coleccion.aggregate(datos_cliente).toArray();
     res.send(result)
 })
+/**
+ * ?  Obtener los datos del cliente que realizó la reserva con ID_Reserva específico
+ *  * http://127.0.0.3:5012/cliente/reservaEsp/8
+ */
+appClientes.get('/reservaEsp/:ID', limitget(), async(req, res) =>{
+    if(!req.rateLimit) return;
+
+    try {
+        const ID_Reserva = req.params.ID;
+        const db = await con();
+        const coleccionContrato = db.collection('Contrato');
+        const coleccionCliente = db.collection('Cliente');
+        
+        // Buscar la reserva por ID_Reserva
+        const reserva = await coleccionContrato.findOne({ ID: parseInt(ID_Reserva), Tipo: 'Reserva' });
+
+        if (!reserva) {
+            return res.status(404).send('Reserva no encontrada');
+        }
+
+        // Obtener los detalles del cliente usando el ID_Cliente de la reserva
+        const cliente = await coleccionCliente.findOne({ ID: reserva.ID_Cliente });
+
+        if (!cliente) {
+            return res.status(404).send('Cliente no encontrado');
+        }
+
+        res.send(cliente);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los datos de la base de datos.');
+    }
+});
 /**
 * ! POST
 */
