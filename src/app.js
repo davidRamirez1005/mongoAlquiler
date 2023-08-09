@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import {servidor} from './config/connec.js';
 import {limitget} from './helpers/configLimit.js'
+import { appToken, appVerify } from "./jwt/configToken.js";
 import appClientes from './routers/clientesRouter.js';
 import appAutomovil from './routers/automovilesRouter.js';
 import appEjemplo from './routers/usuarioEjemplo.js';
@@ -16,9 +17,9 @@ const appExpress = express();
 
 appExpress.use(express.json());
 
-appExpress.use('/token',limitget(), appEjemplo)
-appExpress.use('/ej',limitget(), appEjemplo)
-appExpress.use('/cliente',limitget(), appClientes)
+appExpress.use('/token',limitget(),appToken)
+appExpress.use('/ej',limitget(),appVerify, appEjemplo)
+appExpress.use('/cliente',limitget(),appVerify, appClientes)
 appExpress.use('/automovil',limitget(), appAutomovil)
 appExpress.use('/contrato',limitget(), appContrato)
 appExpress.use('/empleado',limitget(), appEmpleado)

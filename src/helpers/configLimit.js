@@ -18,9 +18,11 @@ export let limitget = () => {
                 return true
             }
         },
-        message: {
-            statusCode : 429,
-            message : 'Has excedido el límite de solicitudes, por favor intenta de nuevo más tarde :('
+        message: (req,res)=>{
+            res.status(429).send({
+                status: 429, 
+                message: "Has excedido el límite de solicitudes, por favor intenta de nuevo más tarde :("
+            });
         },
     });
 }
