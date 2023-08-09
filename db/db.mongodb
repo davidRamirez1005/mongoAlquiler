@@ -1,53 +1,53 @@
 use("db_campus_alquiler");
-
-db.createCollection("usuario", {
+db.createCollection("usuario",{
     capped: true,
-    size: 690,
-    max: 5,
+    size : 690, 
+    max : 5,
     validator: {
         $jsonSchema: {
-            bsonType: 'object',
-            additionalProperties: false,
-            required: ['cc','nombre', 'edad'],
-            properties: {
-                _id: {
-                    bsonType: 'objectId',
-                    description: 'El parametro _id es obligatorio'
-                },
-                cc: {
-                    bsonType: 'int',
-                    description: 'El parametro cc es obligatorio'
-                },
-                nombre: {
-                    bsonType: 'string',
-                    description: 'El parametro nombre es obligatorio'
-                },
-                apellido: {
-                    bsonType: 'string',
-                    description: 'El parametro apellido es obligatorio'
-                },
-                edad: {
-                    bsonType: 'number',
-                    description: 'El parametro edad es obligatorio'
-                }
+          bsonType: 'object',
+          additionalProperties: false,
+          required: ['cc', 'nombre', 'edad'],
+          properties: {
+            _id:{
+                bsonType: 'objectId',
             },
-            allOf: [
-                {
-                    properties: {
-                        email: {
-                            bsonType: 'string',
-                            description: 'El parametro email no es obligatorio per si lo usa debe ser un string'
-                        },
-                        apodo: {
-                            bsonType: 'string',
-                            description: 'El parametro apodo no es obligatorio per si lo usa debe ser un string'
-                        }
+            cc:{
+                bsonType: "int",
+                description: "La cedula es obligatorio y tiene que se de tipo numerico"
+            },
+            nombre: { 
+                // https://www.mongodb.com/docs/atlas/app-services/schemas/types/#std-label-schema-type-string
+                bsonType: 'string',
+                description: 'El nombre es obligatorio y debe ser un string'
+            },
+            apellido: { 
+                bsonType: 'string',
+                description: 'El apellido debe ser un string' 
+            },
+            edad: { 
+                bsonType: 'int',
+                description: 'La edad es obligatorio y debe ser un number'  
+            }
+          },
+          allOf: [
+            {
+                properties: {
+                    email: {
+                        bsonType: 'string',
+                        description: 'El email no es obligatorio ni opcional pero se acepta el dato'
+                    },
+                    apodo: {
+                        bsonType: 'string',
+                        description: 'El apodo no es obligatorio ni opcional pero se acepta el dato'
                     }
                 }
-            ],
+            }
+          ],
         },
     }
 });
+
 use("db_campus_alquiler");
 db.usuario.insertMany([
     {   
