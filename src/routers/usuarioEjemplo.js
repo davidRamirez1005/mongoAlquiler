@@ -10,7 +10,7 @@ const appEjemplo = Router();
 let db = await con();
 let usuario = db.collection("usuario");
 
-appEjemplo.get('/', limitget(), async(req, res) =>{
+appEjemplo.get('/', limitget(),middlewareUsuarioVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     // let db = await con();

@@ -3,7 +3,8 @@ import {Router} from 'express';
 import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
-import { reservas, datos_cliente, cliente_especifico } from '../data/clienteDataAccess.js';
+import { reservas, datos_cliente } from '../data/clienteDataAccess.js';
+import { middlewareClienteVerify } from '../middleware/cliente.js';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ const appClientes = Router();
  * ? Mostrar todos los clientes registrados en la base de datos
  *  * http://127.0.0.3:5012/cliente/clientes
  */
-appClientes.get('/clientes', limitget(), async(req, res) =>{
+appClientes.get('/clientes', limitget(),middlewareClienteVerify, async(req, res) =>{
     if (!req.rateLimit) return;
 
     try {
