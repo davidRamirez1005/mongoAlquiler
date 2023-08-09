@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {plainToClass, classToPlain } from 'class-transformer';
+import {plainToClass } from 'class-transformer';
 import dotenv from 'dotenv';
 import {Router} from 'express';
 import { jwtVerify } from 'jose';
@@ -17,14 +17,13 @@ const createInstance = (className) => {
     'cliente': Client
   };
   const Class = classMap[className];
-  return (!Class) 
-  ? undefined : plainToClass(Class, {}, { ignoreDecorators: true });
+  return (Class) ? plainToClass(Class, {}, { ignoreDecorators: true }) : undefined;
 };
 appToken.use("/:collection", async (req, res) => {
   try {
     const collectionName = req.params.collection;
     const inst = createInstance(collectionName);
-    if (inst === undefined)
+    if (!inst)
     return res.status(404).send({ status: 404, message: "colección no encontrada" })
 
     const jwt = await createJWT(inst);
