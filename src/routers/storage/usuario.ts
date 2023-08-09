@@ -2,11 +2,11 @@ import { Expose, Transform } from 'class-transformer';
 import { IsDefined} from 'class-validator';
 export class User {
     @Expose({ name: 'cedula_usuario' })
-    @IsDefined({message: ()=>{ throw {status: 422, message: `La cedula es obligatoria`}}})
+    @IsDefined({message: ()=>{ throw {status: 422, message: `La cedula_usuario es obligatoria`}}})
     cc: number;
 
     @Expose({ name: 'nombre_usuario' })
-    @IsDefined({message: ()=>{ throw {status: 422, message: `El nombre es obligatoria`}}})
+    @IsDefined({message: ()=>{ throw {status: 422, message: `El nombre_usuario es obligatoria`}}})
     nombre: string;
 
     @Expose({ name: 'apellido_usuario' })
@@ -14,7 +14,7 @@ export class User {
     apellido: string;
 
     @Expose({ name: 'edad_usuario' })
-    @IsDefined({message: ()=>{ throw {status: 422, message: `La edad es obligatoria`}}})
+    @IsDefined({message: ()=>{ throw {status: 422, message: `La edad_usuario es obligatoria`}}})
     edad: number;
 
     constructor(data:Partial<User>) {
