@@ -19,12 +19,12 @@ export class User {
 }
 __decorate([
     Expose({ name: 'cedula_usuario' }),
-    IsDefined({ message: () => { throw { status: 422, message: `La cedula es obligatoria` }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: `La cedula_usuario es obligatoria` }; } }),
     __metadata("design:type", Number)
 ], User.prototype, "cc", void 0);
 __decorate([
     Expose({ name: 'nombre_usuario' }),
-    IsDefined({ message: () => { throw { status: 422, message: `El nombre es obligatoria` }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: `El nombre_usuario es obligatoria` }; } }),
     __metadata("design:type", String)
 ], User.prototype, "nombre", void 0);
 __decorate([
@@ -37,6 +37,6 @@ __decorate([
 ], User.prototype, "apellido", void 0);
 __decorate([
     Expose({ name: 'edad_usuario' }),
-    IsDefined({ message: () => { throw { status: 422, message: `La edad es obligatoria` }; } }),
+    IsDefined({ message: () => { throw { status: 422, message: `La edad_usuario es obligatoria` }; } }),
     __metadata("design:type", Number)
 ], User.prototype, "edad", void 0);

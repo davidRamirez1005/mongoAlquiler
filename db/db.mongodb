@@ -14,12 +14,13 @@ db.createCollection("usuario",{
             },
             cc:{
                 bsonType: "int",
-                description: "La cedula es obligatorio y tiene que se de tipo numerico"
+                description: '{"status": "402", "message": "La cedula_usuario es obligatorio y debe ser numerica"}' 
             },
             nombre: { 
                 // https://www.mongodb.com/docs/atlas/app-services/schemas/types/#std-label-schema-type-string
                 bsonType: 'string',
-                description: 'El nombre es obligatorio y debe ser un string'
+                description: '{"status": "402", "message": "El nombre_usuario es obligatorio y solo resive letras"}' ,
+                pattern: "^[a-zA-Z ]+$"
             },
             apellido: { 
                 bsonType: 'string',
@@ -27,7 +28,7 @@ db.createCollection("usuario",{
             },
             edad: { 
                 bsonType: 'int',
-                description: 'La edad es obligatorio y debe ser un number'  
+                description: '{"status": "402", "message": "La edad_usuario es obligatorio y debe ser numerica"}' 
             }
           },
           allOf: [
@@ -87,27 +88,29 @@ db.createCollection('Cliente', {
                 },
                 ID: {
                     bsonType: 'int',
-                    description: 'El parametro ID es obligatorio'
+                    description: '{"status": "402", "message": "el id es obligatorio y debe ser numerico"}'
                 },
                 Nombre: {
                     bsonType: 'string',
-                    description: 'El parametro nombre es obligatorio'
+                    description: '{"status": "402", "message": "El nombre es obligatorio y solo resive letras"}' ,
+                    pattern: "^[a-zA-Z ]+$"
                 },
                 Apellido: {
                     bsonType: 'string',
-                    description: 'El parametro apellido es obligatorio'
+                    description: '{"status": "402", "message": "El apellido es obligatorio y solo resive letras"}' ,
+                    pattern: "^[a-zA-Z ]+$"
                 },
                 DNI: {
                     bsonType: 'string',
-                    description: 'El parametro DNI es obligatorio'
+                    description: '{"status": "402", "message": "La dni es obligatorio y debe ser string"}'
                 },
                 Direccion: {
                     bsonType: 'string',
-                    description: 'El parametro Direccion es obligatorio'
+                    description: '{"status": "402", "message": "La direccion es obligatoria y debe ser string"}'
                 },
                 Telefono: {
                     bsonType: 'string',
-                    description: 'El parametro Telefono es obligatorio'
+                    description: '{"status": "402", "message": "El telefono es obligatorio y debe ser string"}'
                 },
                 Email: {
                     bsonType: 'string',
