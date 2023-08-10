@@ -1,28 +1,28 @@
 import 'reflect-metadata';
 import {plainToClass, classToPlain} from 'class-transformer';
-import { Client } from "../routers/storage/clientes.js";
+import { Employee } from "../routers/storage/empleado.js";
 import { con } from "../../db/atlas.js";
 import {validate} from 'class-validator';
 import { Router } from "express";
 
-const middlewareClienteVerify = Router();
+const middlewareEmployeeVerify = Router();
 const appDTOData = Router();
 
 let db = await con();
-let cliente = db.collection("Cliente");
+let empleado = db.collection("Empleado");
 
-middlewareClienteVerify.use((req,res,next) => {
+middlewareEmployeeVerify.use((req,res,next) => {
     if(!req.rateLimit) return; 
     let {payload} = req.data;
     const { iat, exp, ...newPayload } = payload;
     payload = newPayload;
-    let Clone = JSON.stringify(classToPlain(plainToClass(Client, {}, { ignoreDecorators: true })));
+    let Clone = JSON.stringify(classToPlain(plainToClass(Employee, {}, { ignoreDecorators: true })));
     let Verify = Clone === JSON.stringify(payload);
     (!Verify) ? res.status(406).send({status: 406, message: "No Autorizado"}) : next();  
 });
 appDTOData.use( async(req,res,next) => {
     try {
-        let data = plainToClass(Client, req.body);
+        let data = plainToClass(Employee, req.body);
         await validate(data);
         req.body = JSON.parse(JSON.stringify(data));
         req.data = undefined;
@@ -32,6 +32,6 @@ appDTOData.use( async(req,res,next) => {
     }
 });
 export {
-    middlewareClienteVerify,
+    middlewareEmployeeVerify,
     appDTOData
 };
