@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
 import { cargo_vendedor, gerente_cargo, Asistente_cargo } from '../data/empleadoDataAcess.js';
+import { middlewareEmployeeVerify } from '../middleware/empleado.js'
 
 dotenv.config();
 const appEmpleado = Router();
@@ -12,7 +13,7 @@ const appEmpleado = Router();
  * ? Listar los empleados con el cargo de "Vendedor"
  *  * http://127.0.0.3:5012/empleado/vendedor
  */
-appEmpleado.get('/vendedor', limitget(), async(req, res) =>{
+appEmpleado.get('/vendedor', limitget(), middlewareEmployeeVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     let db = await con();
@@ -24,7 +25,7 @@ appEmpleado.get('/vendedor', limitget(), async(req, res) =>{
  * ? Mostrar los empleados con cargo de "Gerente" o "Asistente"
  *  * http://127.0.0.3:5012/empleado/gerente
  */
-appEmpleado.get('/:cargo', limitget(), async (req, res) => {
+appEmpleado.get('/:cargo', limitget(), middlewareEmployeeVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     const cargo = req.params.cargo;

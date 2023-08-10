@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
 import { reservas, datos_cliente } from '../data/clienteDataAccess.js';
-import { middlewareClienteVerify } from '../middleware/cliente.js';
+import { middlewareClienteVerify, appDTOData } from '../middleware/cliente.js';
 
 dotenv.config();
 
@@ -17,13 +17,13 @@ const appClientes = Router();
  * ? Mostrar todos los clientes registrados en la base de datos
  *  * http://127.0.0.3:5012/cliente/clientes
  */
-appClientes.get('/clientes', limitget(),middlewareClienteVerify, async(req, res) =>{
+appClientes.get('/clientes', limitget(), middlewareClienteVerify, async(req, res) =>{
     if (!req.rateLimit) return;
 
     try {
         const db = await con();
         const cliente = db.collection('Cliente');
-        const result = await cliente.find().toArray(); // Usa toArray() para obtener los documentos como un arreglo
+        const result = await cliente.find().toArray();
         res.send(result);
     } catch (err) {
         console.error(err);
@@ -34,7 +34,7 @@ appClientes.get('/clientes', limitget(),middlewareClienteVerify, async(req, res)
  * ? Listar los clientes con el DNI específico
  *  * http://127.0.0.3:5012/cliente/DNI/12345678
  */
-appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
+appClientes.get('/DNI/:DNI', limitget(), middlewareClienteVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     const DNI = req.params.DNI;
@@ -49,7 +49,7 @@ appClientes.get('/DNI/:DNI', limitget(), async (req, res) => {
  *  * http://127.0.0.3:5012/cliente/res/12345678
  * TODO:fix
  */
-appClientes.get('/res/:DNI', limitget(), async (req, res) => {
+appClientes.get('/res/:DNI', limitget(), middlewareClienteVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     const DNI = req.params.DNI;
@@ -68,7 +68,7 @@ appClientes.get('/res/:DNI', limitget(), async (req, res) => {
  * ? Obtener los datos de los clientes que realizaron al menos un alquiler.
  *  * http://127.0.0.3:5012/cliente/datos
  */
-appClientes.get('/datos', limitget(), async(req, res) =>{
+appClientes.get('/datos', limitget(),middlewareClienteVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     let db = await con();
@@ -80,7 +80,7 @@ appClientes.get('/datos', limitget(), async(req, res) =>{
  * ?  Obtener los datos del cliente que realizó la reserva con ID_Reserva específico
  *  * http://127.0.0.3:5012/cliente/reservaEsp/8
  */
-appClientes.get('/reservaEsp/:ID', limitget(), async(req, res) =>{
+appClientes.get('/reservaEsp/:ID', limitget(), middlewareClienteVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     try {
@@ -112,7 +112,7 @@ appClientes.get('/reservaEsp/:ID', limitget(), async(req, res) =>{
 /**
 * ! POST
 */
-appClientes.post('/', limitget(), async(req, res) => {
+appClientes.post('/', limitget(), middlewareClienteVerify, appDTOData, async(req, res) => {
     if(!req.rateLimit) return;
 
     let db = await con();
@@ -131,7 +131,7 @@ appClientes.post('/', limitget(), async(req, res) => {
 /**
 * ! PUT
 */
-appClientes.put('/:ID', limitget(), async (req, res) => {
+appClientes.put('/:ID', limitget(), middlewareClienteVerify, appDTOData, async (req, res) => {
     if (!req.rateLimit) return;
 
     const clienteId = req.params.ID;
@@ -168,7 +168,7 @@ appClientes.put('/:ID', limitget(), async (req, res) => {
 /**
  * ! DELETE
  */
-appClientes.delete('/:ID', limitget(), async (req, res) => {
+appClientes.delete('/:ID', limitget(), middlewareClienteVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     const ID = req.params.ID;
