@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { IsDefined } from 'class-validator';
-export class Client {
+export class Employee {
     constructor(data) {
         Object.assign(this, data);
         this.ID = 0;
@@ -19,46 +19,43 @@ export class Client {
         this.DNI = "faker";
         this.Direccion = "faker";
         this.Telefono = "faker";
+        this.cargo = "faker";
     }
 }
 __decorate([
     Expose({ name: 'ID' }),
     IsDefined({ message: () => { throw { status: 422, message: `La ID es obligatoria` }; } }),
     __metadata("design:type", Number)
-], Client.prototype, "ID", void 0);
+], Employee.prototype, "ID", void 0);
 __decorate([
     Expose({ name: 'Nombre' }),
     IsDefined({ message: () => { throw { status: 422, message: `El Nombre es obligatoria` }; } }),
     __metadata("design:type", String)
-], Client.prototype, "Nombre", void 0);
+], Employee.prototype, "Nombre", void 0);
 __decorate([
     Expose({ name: 'Apellido' }),
     IsDefined({ message: () => { throw { status: 422, message: `El Apellido es obligatoria` }; } })
     // @Transform(({ value }) => { if(value) return value ; else "Faker"})
     ,
     __metadata("design:type", String)
-], Client.prototype, "Apellido", void 0);
+], Employee.prototype, "Apellido", void 0);
 __decorate([
     Expose({ name: 'DNI' }),
     IsDefined({ message: () => { throw { status: 422, message: `La DNI es obligatoria` }; } }),
     __metadata("design:type", String)
-], Client.prototype, "DNI", void 0);
+], Employee.prototype, "DNI", void 0);
 __decorate([
     Expose({ name: 'Direccion' }),
     IsDefined({ message: () => { throw { status: 422, message: `La Direccion es obligatoria` }; } }),
     __metadata("design:type", String)
-], Client.prototype, "Direccion", void 0);
+], Employee.prototype, "Direccion", void 0);
 __decorate([
     Expose({ name: 'Telefono' }),
     IsDefined({ message: () => { throw { status: 422, message: `La Telefono es obligatoria` }; } }),
     __metadata("design:type", String)
-], Client.prototype, "Telefono", void 0);
+], Employee.prototype, "Telefono", void 0);
 __decorate([
-    Expose({ name: 'email' }),
-    IsDefined({ message: () => { throw { status: 422, message: `El email es obligatorio` }; } }),
-    Transform(({ value }) => { if (value)
-        return value;
-    else
-        "Faker"; }),
+    Expose({ name: 'cargo' }),
+    IsDefined({ message: () => { throw { status: 422, message: `EL cargo es obligatorio` }; } }),
     __metadata("design:type", String)
-], Client.prototype, "Email", void 0);
+], Employee.prototype, "cargo", void 0);
