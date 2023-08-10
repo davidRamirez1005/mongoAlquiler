@@ -1,6 +1,6 @@
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { IsDefined} from 'class-validator';
-export class Client {
+export class Employee {
     @Expose({ name: 'ID' })
     @IsDefined({message: ()=>{ throw {status: 422, message: `La ID es obligatoria`}}})
     ID: number;
@@ -26,19 +26,19 @@ export class Client {
     @IsDefined({message: ()=>{ throw {status: 422, message: `La Telefono es obligatoria`}}})
     Telefono: string;
 
-    @Expose({ name: 'email' })
-    @IsDefined({message: ()=>{ throw {status: 422, message: `El email es obligatorio`}}})
-    @Transform(({ value }) => { if(value) return value ; else "Faker"})
-    Email: string;
+    @Expose({ name: 'cargo' })
+    @IsDefined({message: ()=>{ throw {status: 422, message: `EL cargo es obligatorio`}}})
+    cargo: string;
 
-    constructor(data:Partial<Client>) {
-      Object.assign(this, data);
-      this.ID = 0;
-      this.Nombre = "Faker";
-      this.Apellido = "faker";
-      this.Apellido = "faker";
-      this.DNI = "faker";
-      this.Direccion = "faker";
-      this.Telefono = "faker";
+    constructor(data:Partial<Employee>) {
+        Object.assign(this, data);
+        this.ID = 0;
+        this.Nombre = "Faker";
+        this.Apellido = "faker";
+        this.Apellido = "faker";
+        this.DNI = "faker";
+        this.Direccion = "faker";
+        this.Telefono = "faker";
+        this.cargo = "faker";
     }
 }
