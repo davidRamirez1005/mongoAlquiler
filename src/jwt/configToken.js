@@ -6,6 +6,8 @@ import { jwtVerify } from 'jose';
 import createJWT from './generateJwt..js';
 import {User} from "../routers/storage/usuario.js";
 import {Client} from "../routers/storage/clientes.js";
+import {Employee} from "../routers/storage/empleado.js";
+
 
 dotenv.config();
 const appToken = Router();
@@ -14,7 +16,8 @@ const appVerify = Router();
 const createInstance = (className) => {
   const classMap = {
     'usuario': User,
-    'cliente': Client
+    'cliente': Client,
+    'empleado': Employee
   };
   const Class = classMap[className];
   return (Class) ? plainToClass(Class, {}, { ignoreDecorators: true }) : undefined;
