@@ -7,6 +7,9 @@ import createJWT from './generateJwt..js';
 import {User} from "../routers/storage/usuario.js";
 import {Client} from "../routers/storage/clientes.js";
 import {Employee} from "../routers/storage/empleado.js";
+import {Car} from "../routers/storage/automovil.js";
+import {Branch} from "../routers/storage/sucursal.js";
+import {Contract} from "../routers/storage/contrato.js";
 
 
 dotenv.config();
@@ -17,7 +20,10 @@ const createInstance = (className) => {
   const classMap = {
     'usuario': User,
     'cliente': Client,
-    'empleado': Employee
+    'empleado' : Employee,
+    'auto' : Car,
+    'sucursal' : Branch,
+    'contrato' : Contract
   };
   const Class = classMap[className];
   return (Class) ? plainToClass(Class, {}, { ignoreDecorators: true }) : undefined;
