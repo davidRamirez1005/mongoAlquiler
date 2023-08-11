@@ -12,7 +12,7 @@ const createJWT = async (inst) => {
     return await jwtConstructor
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setIssuedAt()
-      .setExpirationTime("30m")
+      .setExpirationTime("1h")
       .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
 };
 
