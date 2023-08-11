@@ -18,12 +18,12 @@ const appExpress = express();
 appExpress.use(express.json());
 
 appExpress.use('/token',limitget(),appToken)
-appExpress.use('/ej',limitget(),appVerify, appEjemplo)
+appExpress.use('/ej',limitget(), appVerify, appEjemplo)
 appExpress.use('/cliente',limitget(),appVerify, appClientes)
-appExpress.use('/automovil',limitget(), appAutomovil)
-appExpress.use('/contrato',limitget(), appContrato)
-appExpress.use('/empleado',limitget(), appEmpleado)
-appExpress.use('/sucursal',limitget(), appSucursal)
+appExpress.use('/automovil',limitget(), appVerify, appAutomovil)
+appExpress.use('/contrato',limitget(), appVerify, appContrato)
+appExpress.use('/empleado',limitget(), appVerify, appEmpleado)
+appExpress.use('/sucursal',limitget(), appVerify, appSucursal)
 
 
 appExpress.listen(servidor.port, () => {
