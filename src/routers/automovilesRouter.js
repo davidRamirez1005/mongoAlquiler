@@ -4,6 +4,7 @@ import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
 import { auto_disponible } from '../data/automovilDataAccess.js';
 import { capacidad_max, capacidad_disponible } from '../data/automovilDataAccess.js';
+import { middlewareAutoVerify } from '../middleware/automovil.js'
 
 
 dotenv.config();
@@ -13,7 +14,7 @@ const appAutomovil = Router();
  * ? Listar automoviles disponibles.
  * * http://127.0.0.3:5012/automovil/auto
  */
-appAutomovil.get('/auto', limitget(), async (req, res) => {
+appAutomovil.get('/auto', limitget(), middlewareAutoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
@@ -31,7 +32,7 @@ appAutomovil.get('/auto', limitget(), async (req, res) => {
  * ? Mostrar todos los automóviles con una capacidad mayor a 5 personas
  * * http://127.0.0.3:5012/automovil/max
  */
-appAutomovil.get('/max', limitget(), async (req, res) => {
+appAutomovil.get('/max', limitget(), middlewareAutoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
@@ -49,7 +50,7 @@ appAutomovil.get('/max', limitget(), async (req, res) => {
  * ? Listar todos los automóviles ordenados por marca y modelo
  * * http://127.0.0.3:5012/automovil/ordenados
  */
-appAutomovil.get('/ordenados', limitget(), async (req, res) => {
+appAutomovil.get('/ordenados', limitget(), middlewareAutoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
@@ -67,7 +68,7 @@ appAutomovil.get('/ordenados', limitget(), async (req, res) => {
  * ? Mostrar los automóviles con capacidad igual a 5 personas y que estén disponibles 
  * * http://127.0.0.3:5012/automovil/capDis
  */
-appAutomovil.get('/capDis', limitget(), async (req, res) => {
+appAutomovil.get('/capDis', limitget(), middlewareAutoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {

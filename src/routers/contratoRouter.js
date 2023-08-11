@@ -5,6 +5,7 @@ import {ObjectId} from 'mongodb'
 import {con} from '../../db/atlas.js'
 import { alquiler_activo, reserva_pendiente, projection, entre_fecha } from '../data/contratoDataAcess.js';
 import { fecha_inicio } from '../data/contratoDataAcess.js';
+import { middlewareContratoVerify } from '../middleware/contrato.js';
 
 dotenv.config();
 const appContrato = Router();
@@ -13,7 +14,7 @@ const appContrato = Router();
  * ? Listar todos los alquileres activos junto con los datos de los clientes relacionados.
  *  * http://127.0.0.3:5012/contrato/alquiler
  */
-appContrato.get('/alquiler', limitget(), async (req, res) => {
+appContrato.get('/alquiler', limitget(), middlewareContratoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
@@ -31,7 +32,7 @@ appContrato.get('/alquiler', limitget(), async (req, res) => {
  * ? Mostrar todas las reservas pendientes con los datos del cliente y el automóvil reservado
  *  * http://127.0.0.3:5012/contrato/reservas
  */
-appContrato.get('/reservas', limitget(), async (req, res) => {
+appContrato.get('/reservas', limitget(), middlewareContratoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
@@ -49,7 +50,7 @@ appContrato.get('/reservas', limitget(), async (req, res) => {
  * ? Obtener los detalles del alquiler con el ID_Alquilerespecífico.
  *  * http://127.0.0.3:5012/contrato/detalles/2
  */
-appContrato.get('/detalles/:ID', limitget(), async(req, res) =>{
+appContrato.get('/detalles/:ID', limitget(), middlewareContratoVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     const ID = req.params.ID;
@@ -69,7 +70,7 @@ appContrato.get('/detalles/:ID', limitget(), async(req, res) =>{
  * ? Obtener el costo total de un alquiler específico.
  *  * http://127.0.0.3:5012/contrato/costo/3
  */
-appContrato.get('/costo/:ID', limitget(), async(req, res) =>{
+appContrato.get('/costo/:ID', limitget(), middlewareContratoVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     const ID = req.params.ID;
@@ -89,7 +90,7 @@ appContrato.get('/costo/:ID', limitget(), async(req, res) =>{
  * ? Obtener los detalles del alquiler que tiene fecha de inicio en '2023-07-05'
  *  * http://127.0.0.3:5012/contrato/fecha
  */
-appContrato.get('/fecha', limitget(), async(req, res) =>{
+appContrato.get('/fecha', limitget(), middlewareContratoVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     let db = await con();
@@ -102,7 +103,7 @@ appContrato.get('/fecha', limitget(), async(req, res) =>{
  * ?  Obtener la cantidad total de alquileres registrados en la base de datos
  * * http://127.0.0.3:5012/contrato/totales
  */
-appContrato.get('/totales', limitget(), async (req, res) => {
+appContrato.get('/totales', limitget(), middlewareContratoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
@@ -119,7 +120,7 @@ appContrato.get('/totales', limitget(), async (req, res) => {
  * ?  Listar los alquileres con fecha de inicio entre '2023-07-05' y '2023-07-10'.
  * * http://127.0.0.3:5012/contrato/inicioFin
  */
-appContrato.get('/inicioFin', limitget(), async (req, res) => {
+appContrato.get('/inicioFin', limitget(), middlewareContratoVerify, async (req, res) => {
     if (!req.rateLimit) return;
 
     try {
