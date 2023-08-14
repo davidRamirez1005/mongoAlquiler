@@ -19,7 +19,7 @@ db.createCollection("usuario",{
             nombre: { 
                 // https://www.mongodb.com/docs/atlas/app-services/schemas/types/#std-label-schema-type-string
                 bsonType: 'string',
-                description: '{"status": "402", "message": "El nombre_usuario es obligatorio y solo resive letras"}' ,
+                description: '{"status": "402", "message": "El nombre_usuario es obligatorio y solo aceptas letras"}' ,
                 pattern: "^[a-zA-Z ]+$"
             },
             apellido: { 

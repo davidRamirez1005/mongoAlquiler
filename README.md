@@ -43,7 +43,7 @@ appExpress.use('/cliente',limitget(),appVerify, appClientes)
     "DNI": "111111111",
     "Direccion": "calle 1 A",
     "Telefono": "123654"
-  }
+}
 ```
 
 #### => Gestión de *automovil*:
@@ -51,7 +51,7 @@ appExpress.use('/cliente',limitget(),appVerify, appClientes)
 Usar el endpoint `/automovil`
 
 ```
-appExpress.use('/automovil',limitget(),appVerify, appClientes)
+appExpress.use('/automovil',limitget(),appVerify, appAutomovil)
 ```
 
 
@@ -69,7 +69,7 @@ appExpress.use('/automovil',limitget(),appVerify, appClientes)
 Usar el endpoint `/contrato`
 
 ```
-appExpress.use('/contrato',limitget(),appVerify, appClientes)
+appExpress.use('/contrato',limitget(),appVerify, appContrato)
 ```
 
 
@@ -91,7 +91,7 @@ appExpress.use('/contrato',limitget(),appVerify, appClientes)
 Usar el endpoint `/empleado`
 
 ```
-appExpress.use('/empleado',limitget(),appVerify, appClientes)
+appExpress.use('/empleado',limitget(),appVerify, appEmpleado)
 ```
 
 
@@ -107,7 +107,7 @@ appExpress.use('/empleado',limitget(),appVerify, appClientes)
 Usar el endpoint `/sucursal`
 
 ```
-appExpress.use('/sucursal',limitget(),appVerify, appClientes)
+appExpress.use('/sucursal',limitget(),appVerify, appSucursal)
 ```
 
 
