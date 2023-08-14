@@ -36,7 +36,6 @@ export class Client {
       this.ID = 0;
       this.Nombre = "Faker";
       this.Apellido = "faker";
-      this.Apellido = "faker";
       this.DNI = "faker";
       this.Direccion = "faker";
       this.Telefono = "faker";
